@@ -26,7 +26,7 @@ public class Game extends Canvas {
         int dashWidth = 50;
         int dashGap = 20;
         for(int i = 0; i <= getHeight()/(dashGap+dashWidth); i++) {
-            g.fillRect(399, i*(dashGap+dashWidth), 2, dashWidth);
+            g.fillRect(400, i*(dashGap+dashWidth), 1, dashWidth);
         }
         leftPaddle.playerMove();
         leftPaddle.render(g);
@@ -60,10 +60,10 @@ public class Game extends Canvas {
         int bx = BALL.getX();
         Paddle lp = leftPaddle;
         Paddle rp = rightPaddle;
-        if(bx < lp.getX() + lp.getWIDTH() /2) {
+        if(bx < 0) {
             BALL.reset();
             rightPaddle.addScore();
-        } else if (bx > rp.getX() + rp.getWIDTH() /2) {
+        } else if (bx > getWidth()) {
             leftPaddle.addScore();
             BALL.reset();
         }

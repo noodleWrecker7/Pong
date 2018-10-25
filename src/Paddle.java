@@ -4,7 +4,7 @@ public class Paddle {
 
     private int y;
     private final int X;
-    private final int WIDTH = 20;
+    private final int WIDTH = 15;
     private final int HEIGHT = 75;
     private final int SPEED = 5;
     private int direction;

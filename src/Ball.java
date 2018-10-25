@@ -9,10 +9,10 @@ public class Ball {
     private final int RADIUS;
     private int x, y, xSpeed, ySpeed;
     private final int maxYSpeed = 6;
-
-
-    public Ball(int r) {
+    
+    Ball(int r) {
         this.RADIUS = r;
+
         /*this.x = 400; // center of ball
         this.y = 300;
         this.xSpeed = -7;
@@ -20,39 +20,38 @@ public class Ball {
         reset();
     }
 
-    public void setySpeed(int i) {
+    void setySpeed(int i) {
         this.ySpeed = i;
     }
 
-
-    public void setX(int i) {
+    void setX(int i) {
         this.x = i;
     }
 
-    public void setY(int i) {
+    void setY(int i) {
         this.y = i;
     }
 
-    public int getX() {
+    int getX() {
         return x;
     }
 
-    public int getY() {
+    int getY() {
         return y;
     }
 
-    public int getRadius() {
+    int getRadius() {
         return RADIUS;
     }
 
-    public void bouncePaddle(Paddle p) {
+    void bouncePaddle(Paddle p) {
         System.out.println("Y: " +this.y); //
         System.out.println("Paddle Y: " + p.getY()); //
         System.out.println("Paddle center Y: " + p.getHEIGHT()/2); //
         int distance = this.y - (p.getY() + p.getHEIGHT() / 2);
         System.out.println("Distance: "+distance);  //
         ySpeed += distance / 6;
-        System.out.println("YSpeed: " +ySpeed); // 
+        System.out.println("YSpeed: " +ySpeed); //
         if (ySpeed > maxYSpeed) {
             ySpeed = maxYSpeed;
         } if (ySpeed < -maxYSpeed) {
