@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Paddle {
+class Paddle {
 
     private int y;
     private final int X;
@@ -11,32 +11,32 @@ public class Paddle {
     private final int aiBuffer = 5;
     private int score = 0;
 
-    public Paddle(int x) {
+    Paddle(int x) {
         this.X = x;
         this.y = 275;
     }
 
-    public int getScore() {
+    int getScore() {
         return score;
     }
 
-    public int getY() {
+    int getY() {
         return y;
     }
 
-    public int getX() {
+    int getX() {
         return X;
     }
 
-    public int getWIDTH() {
+    int getWIDTH() {
         return WIDTH;
     }
 
-    public int getHEIGHT() {
+    int getHEIGHT() {
         return HEIGHT;
     }
 
-    public void playerMove() {
+    void playerMove() {
         switch (direction) {
             case 1:
                 y -= SPEED;
@@ -47,11 +47,11 @@ public class Paddle {
         }
     }
 
-    public void addScore() {
+    void addScore() {
         score++;
     }
 
-    public void aiMove(Ball b) {
+    void aiMove(Ball b) {
         if (b.getY() < this.y + aiBuffer) {
             y -= SPEED;
         } else if (b.getY() > this.y + this.HEIGHT - aiBuffer) {
@@ -60,11 +60,11 @@ public class Paddle {
     }
 
 
-    public void setDirection(int d) {
+    void setDirection(int d) {
         direction = d;
     }
 
-    public void render(Graphics g) {
+    void render(Graphics g) {
         if(this.y < 0){ // checks its legal movement
             this.y = 0;
         }

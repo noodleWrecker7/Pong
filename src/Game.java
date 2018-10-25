@@ -4,15 +4,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Timer;
 import java.util.TimerTask;
-public class Game extends Canvas {
+class Game extends Canvas {
 
     private static final int FPS = 60;
 
     private static final Game GAME = new Game(800, 600);
-    private static final Ball BALL = new Ball(7);
+    private static final Ball BALL = new Ball();
     private static Paddle leftPaddle, rightPaddle;
 
-    public Game(int w, int h) {
+    private Game(int w, int h) {
         setSize(w, h);
         leftPaddle = new Paddle(10);
         rightPaddle = new Paddle(770);
@@ -23,8 +23,8 @@ public class Game extends Canvas {
         g.setColor(Color.black);
         g.fillRect(0, 0, getWidth(), getHeight());
         g.setColor(Color.white);
-        int dashWidth = 50;
-        int dashGap = 20;
+        int dashWidth = 30;
+        int dashGap = 10;
         for(int i = 0; i <= getHeight()/(dashGap+dashWidth); i++) {
             g.fillRect(400, i*(dashGap+dashWidth), 1, dashWidth);
         }
@@ -38,17 +38,14 @@ public class Game extends Canvas {
         checkFail();
         g.drawString(Integer.toString(leftPaddle.getScore()), 200, 100);
         g.drawString(Integer.toString(rightPaddle.getScore()), 600, 100);
-
-
     }
 
     @Override
     public void update(Graphics g) {
         Graphics offgc;
-        Image offscreen = null;
-        Dimension d = size();
+        Image offscreen;
 
-        offscreen = createImage(d.width, d.height);
+        offscreen = createImage(getWidth(), getHeight());
         offgc = offscreen.getGraphics();
 
         paint(offgc);
@@ -58,8 +55,6 @@ public class Game extends Canvas {
 
     private void checkFail() {
         int bx = BALL.getX();
-        Paddle lp = leftPaddle;
-        Paddle rp = rightPaddle;
         if(bx < 0) {
             BALL.reset();
             rightPaddle.addScore();
@@ -67,7 +62,6 @@ public class Game extends Canvas {
             leftPaddle.addScore();
             BALL.reset();
         }
-
     }
 
     private void checkPaddleHit() {
