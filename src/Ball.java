@@ -7,7 +7,7 @@ class Ball {
     private final Random rand = new Random();
 
     private int x, y, xSpeed, ySpeed;
-    private final int maxYSpeed = 6;
+    private final int maxYSpeed = 7;
     private final int RADIUS = 7;
 
     Ball() {
@@ -17,6 +17,8 @@ class Ball {
     private void setySpeed(int i) {
         this.ySpeed = i;
     }
+
+    public int getxSpeed() { return this.xSpeed;}
 
     int getX() {
         return x;

@@ -6,7 +6,7 @@ class Paddle {
     private final int X;
     private final int WIDTH = 15;
     private final int HEIGHT = 75;
-    private final int SPEED = 5;
+    private final int SPEED = 7;
     private int direction;
     private final int aiBuffer = 5;
     private int score = 0;
@@ -51,7 +51,9 @@ class Paddle {
         score++;
     }
 
-    void aiMove(Ball b) {
+    void aiMove(Ball b, char side) {
+        if(side == 'l' && b.getxSpeed() > 0 ) return; // if ball heading away
+        if(side == 'r' && b.getxSpeed() < 0 ) return;
         if (b.getY() < this.y + aiBuffer) {
             y -= SPEED;
         } else if (b.getY() > this.y + this.HEIGHT - aiBuffer) {
