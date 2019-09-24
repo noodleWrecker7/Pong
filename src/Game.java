@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Timer;
 import java.util.TimerTask;
+
 class Game extends Canvas {
 
     private static final int FPS = 60;
@@ -25,12 +26,15 @@ class Game extends Canvas {
         g.setColor(Color.white);
         int dashWidth = 30;
         int dashGap = 10;
-        for(int i = 0; i <= getHeight()/(dashGap+dashWidth); i++) {
-            g.fillRect(400, i*(dashGap+dashWidth), 1, dashWidth);
+        for (int i = 0; i <= getHeight() / (dashGap + dashWidth); i++) {
+            g.fillRect(400, i * (dashGap + dashWidth), 1, dashWidth);
         }
-        leftPaddle.playerMove();
+        leftPaddle.aiMove(BALL, 'l');
+        //leftPaddle.playerMove();
         leftPaddle.render(g);
-        rightPaddle.aiMove(BALL);
+
+        rightPaddle.aiMove(BALL, 'r');
+        //rightPaddle.playerMove();
         rightPaddle.render(g);
         BALL.bounceEdge(getHeight());
         BALL.render(g);
@@ -55,7 +59,7 @@ class Game extends Canvas {
 
     private void checkFail() {
         int bx = BALL.getX();
-        if(bx < 0) {
+        if (bx < 0) {
             BALL.reset();
             rightPaddle.addScore();
         } else if (bx > getWidth()) {
@@ -72,23 +76,43 @@ class Game extends Canvas {
         Paddle lp = leftPaddle;
         Paddle rp = rightPaddle;
 
-        if(bx - br < lp.getX() + lp.getWIDTH() && by > lp.getY() && by < lp.getY() + lp.getHEIGHT() ) {
+        if (bx - br < lp.getX() + lp.getWIDTH() && by > lp.getY() && by < lp.getY() + lp.getHEIGHT()) {
             b.bouncePaddle(leftPaddle);
         }
-        if(bx + br > rp.getX() && by > rp.getY() && by < rp.getY() + rp.getHEIGHT() ) {
+        if (bx + br > rp.getX() && by > rp.getY() && by < rp.getY() + rp.getHEIGHT()) {
             b.bouncePaddle(rightPaddle);
         }
     }
 
     private void keyDown(int e) {
         int totalMove = 0;
-        if(e == 38) {
-            totalMove ++;
+        System.out.println(e);
+        // LEFT PADDLE PLAYER MOVEMENT ARROW KEYS
+        if (e == 87) {
+            totalMove++;
         }
-        if(e == 40) {
-            totalMove --;
+        if (e == 83) {
+            totalMove--;
         }
-        leftPaddle.setDirection(totalMove);
+        if (totalMove != 0) {
+            leftPaddle.setDirection(totalMove);
+            return;
+        }
+
+        // RIGHT PADDLE PLAYER MOVEMENT WASD
+
+        if (e == 38) {
+            totalMove++;
+        }
+        if (e == 40) {
+            totalMove--;
+        }
+        if (totalMove != 0) {
+            rightPaddle.setDirection(totalMove);
+            return;
+        }
+
+
     }
 
     public static void main(String args[]) {
@@ -99,7 +123,7 @@ class Game extends Canvas {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        GAME.createBufferStrategy(2);
+        GAME.createBufferStrategy(3);
         GAME.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -113,7 +137,17 @@ class Game extends Canvas {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                leftPaddle.setDirection(0);
+                int code = e.getKeyCode();
+                switch (code) {
+                    case 83:
+                    case 87:
+                        leftPaddle.setDirection(0);
+                        break;
+                    case 38:
+                    case 40:
+                        rightPaddle.setDirection(0);
+                }
+
             }
         });
 
@@ -123,6 +157,6 @@ class Game extends Canvas {
             public void run() {
                 GAME.repaint();
             }
-        }, 1000, 1000/FPS);
+        }, 1000, 1000 / FPS);
     }
 }
