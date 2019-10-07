@@ -9,6 +9,8 @@ class Game extends Canvas {
 
     private static final int FPS = 60;
 
+    private static boolean inGame = false;
+
     private static final Game GAME = new Game(800, 600);
     private static final Ball BALL = new Ball();
     private static Paddle leftPaddle, rightPaddle;
@@ -29,6 +31,11 @@ class Game extends Canvas {
         for (int i = 0; i <= getHeight() / (dashGap + dashWidth); i++) {
             g.fillRect(400, i * (dashGap + dashWidth), 1, dashWidth);
         }
+        if (!inGame) {
+            g.drawString("PRESS ANY KEY TO BEGIN", 350, 200);
+            return;
+        }
+
         leftPaddle.aiMove(BALL, 'l');
         //leftPaddle.playerMove();
         leftPaddle.render(g);
@@ -137,6 +144,7 @@ class Game extends Canvas {
 
             @Override
             public void keyReleased(KeyEvent e) {
+                if (!inGame) inGame = true;
                 int code = e.getKeyCode();
                 switch (code) {
                     case 83:
