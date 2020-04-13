@@ -36,8 +36,8 @@ class Game extends Canvas {
             return;
         }
 
-        leftPaddle.aiMove(BALL, 'l');
-        //leftPaddle.playerMove();
+        //leftPaddle.aiMove(BALL, 'l');
+        leftPaddle.playerMove();
         leftPaddle.render(g);
 
         rightPaddle.aiMove(BALL, 'r');
